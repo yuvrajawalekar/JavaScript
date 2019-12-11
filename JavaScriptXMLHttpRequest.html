@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Sticky Head</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid steelblue;
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 10px;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: skyblue;
+        }
+    </style>
+
+    <script>
+        function getData() {
+            var url = "https://jsonplaceholder.typicode.com/posts";
+            var http = new XMLHttpRequest();
+            var content = "";
+
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var array = JSON.parse(this.responseText);
+                    for (let index = 0; index < array.length; index++) {
+                        content = content + "<tr><td style='width:60px'>" + array[index].userId + "</td><td style='width: 50px;'>" + array[index].id + "</td><td style='width: 350px;'>" + array[index].title + "</td><td style='width: 1080px;'>>" + array[index].body + "</td></tr>"
+                    };
+                    document.getElementById("dataFromLink").innerHTML = content;
+                };
+            };
+            http.open("GET", url, true);
+            http.send();
+        }
+    </script>
+</head>
+
+<body>
+    <div style="margin-right: 5%; margin-left: 5%; margin-top: 5%;">
+        <div><button id="link" onclick="getData()"
+                style="background-color:royalblue; color: snow; height: 50px; width: 200px;">Download from Link</button>
+        </div>
+        <div>
+            <br>
+            <table style="background-color: beige;">
+                <thead>
+                    <tr style="display: block;
+                        position: relative;">
+                        <th style="width: 60px;">User Id</th>
+                        <th style="width: 50px;">ID</th>
+                        <th style="width: 350px;">Title</th>
+                        <th style="width: 1100px;">Body</th>
+                    </tr>
+                </thead>
+                <tbody id="dataFromLink" style="overflow: auto;width: 100%; height: 640px;display: block;">
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+
+</html>
